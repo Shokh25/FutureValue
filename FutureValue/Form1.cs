@@ -9,40 +9,34 @@ namespace FutureValue
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
-            decimal monthlyInvestment = Convert.ToDecimal(txtMonthlyInvestment.Text);
-            //validate the data to handle the exception that gets thrown
+            try
+            {
+                decimal monthlyInvestment = Convert.ToDecimal(txtMonthlyInvestment.Text);
+                decimal yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
+                int years = Convert.ToInt32(txtYears.Text);
 
-            decimal yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
-            //validate the data to handle the exception that gets thrown
+                int months = years * 12;
+                decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
+                decimal futureValue = CalculateFutureValue(0, monthlyInvestment, monthlyInterestRate, months);
 
-            int years = Convert.ToInt32(txtYears.Text);
-            //validate the data to handle the exception that gets thrown
+                txtFutureValue.Text = futureValue.ToString("c");
+                txtMonthlyInvestment.Focus();
 
-            int months = years * 12;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("You enter incorrect data");
+            }
+        }
 
-            decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
-            decimal futureValue = 0m;
-
+        private decimal CalculateFutureValue(decimal futureValue, decimal monthlyInvestment, decimal monthlyInterestRate, int months)
+        {
             for (int i = 0; i < months; i++)
             {
                 futureValue = (futureValue + monthlyInvestment) * (1 + monthlyInterestRate);
             }
-
-            txtFutureValue.Text = futureValue.ToString("c");
-            txtMonthlyInvestment.Focus();
+            return futureValue;
         }
-       
-        //private decimal CalculateFutureValue(decimal monthlyInvestment, decimal monthlyInterestRate = 0.05m, int months = 12) 
-        //{
-        //    decimal futureValue = 0m;
-
-        //    for (int i = 0; i < months; i++)
-        //    {
-        //        futureValue = (futureValue + monthlyInvestment) * (1 + monthlyInterestRate);
-        //    }
-
-        //    return futureValue;
-        //}
 
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -50,6 +44,36 @@ namespace FutureValue
             this.Close();
         }
 
+        private void ClearFutureValues(object sender, EventArgs e)
+        {
+            txtInterestRate.Text = "";
+            txtYears.Text = "";
+            txtFutureValue.Text = "";
+        }
 
+
+
+        
+        
+
+        private void ReturnColor(object sender, EventArgs e)
+        {
+            btnCalculate.BackColor = Color.White;
+            btnCalculate.ForeColor = Color.Black;
+            btnExit.BackColor = Color.White;
+            btnExit.ForeColor = Color.Black;
+        }
+
+        private void CalculateChangeColor(object sender, EventArgs e)
+        {
+            btnCalculate.BackColor = Color.Navy;
+            btnCalculate.ForeColor = Color.White;
+        }
+
+        private void ExitChangeColor(object sender, EventArgs e)
+        {
+            btnExit.BackColor = Color.Olive;
+            btnExit.ForeColor = Color.White;
+        }
     }
 }

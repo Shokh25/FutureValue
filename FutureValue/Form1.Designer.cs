@@ -82,6 +82,7 @@
             txtMonthlyInvestment.Name = "txtMonthlyInvestment";
             txtMonthlyInvestment.Size = new Size(125, 27);
             txtMonthlyInvestment.TabIndex = 1;
+            txtMonthlyInvestment.TextChanged += ClearFutureValues;
             // 
             // txtInterestRate
             // 
@@ -115,6 +116,8 @@
             btnCalculate.Text = "Calculate";
             btnCalculate.UseVisualStyleBackColor = true;
             btnCalculate.Click += btnCalculate_Click;
+            btnCalculate.MouseLeave += ReturnColor;
+            btnCalculate.MouseHover += CalculateChangeColor;
             // 
             // btnExit
             // 
@@ -125,6 +128,8 @@
             btnExit.Text = "Exit";
             btnExit.UseVisualStyleBackColor = true;
             btnExit.Click += btnExit_Click;
+            btnExit.MouseLeave += ReturnColor;
+            btnExit.MouseHover += ExitChangeColor;
             // 
             // Form1
             // 
@@ -143,6 +148,7 @@
             Controls.Add(label1);
             Name = "Form1";
             Text = "Form1";
+            DoubleClick += ClearFutureValues;
             ResumeLayout(false);
             PerformLayout();
         }
